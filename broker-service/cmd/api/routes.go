@@ -15,11 +15,11 @@ func (app *Config) routes() http.Handler {
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
 		ExposedHeaders:   []string{"Link"},
-		AllowCredentials: false,
+		AllowCredentials: true,
 		MaxAge:           300,
 	}))
 
 	mux.Use(middleware.Heartbeat("/ping"))
-	mux.Get("/", app.Broker)
+	mux.Post("/", app.Broker)
 	return mux
 }
