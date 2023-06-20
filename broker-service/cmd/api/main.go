@@ -6,6 +6,8 @@ import (
 	"net/http"
 )
 
+type Config struct{}
+
 const webPort = "8080"
 
 func main() {
