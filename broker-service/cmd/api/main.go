@@ -11,9 +11,11 @@ type Config struct{}
 const webPort = "8080"
 
 func main() {
+	app := Config{}
 	log.Printf("Starting broker service on port %s", webPort)
 	srv := &http.Server{
-		Addr: fmt.Sprintf(":%s", webPort),
+		Addr:    fmt.Sprintf(":%s", webPort),
+		Handler: app.routes(),
 	}
 	err := srv.ListenAndServe()
 	if err != nil {
