@@ -5,6 +5,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/go-playground/validator"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -25,12 +26,16 @@ type Models struct {
 
 type LogEntry struct {
 	ID        string    `bson:"_id,omitempty" json:"id,omitempty"`
-	Name      string    `bson:"name" json:"name"`
-	Data      string    `bson:"data" json:"data"`
+	Name      string    `bson:"name" json:"name" validate:"required"`
+	Data      string    `bson:"data" json:"data" validate:"required"`
 	CreatedAt time.Time `bson:"created_at" json:"created_at"`
 	UpdatedAt time.Time `bson:"updated_at" json:"updated_at"`
 }
 
+func (l *LogEntry) Validate() error {
+	validate := validator.New()
+	return validate.Struct(l)
+}
 func (l *LogEntry) Insert(entry LogEntry) error {
 	collection := client.Database("logs").Collection("logs")
 	_, err := collection.InsertOne(context.TODO(), LogEntry{
