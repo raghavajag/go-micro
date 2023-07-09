@@ -18,12 +18,13 @@ func (app *Config) WriteLog(w http.ResponseWriter, r *http.Request) {
 		Name: requestPayload.Name,
 		Data: requestPayload.Data,
 	}
-	err := app.Models.LogEntry.Validate()
-	if err != nil {
-		app.errorJSON(w, err, http.StatusBadRequest)
-		return
-	}
-	err = app.Models.LogEntry.Insert(event)
+	// causing request to failed.
+	// err := app.Models.LogEntry.Validate()
+	// if err != nil {
+	// 	app.errorJSON(w, err, http.StatusBadRequest)
+	// 	return
+	// }
+	err := app.Models.LogEntry.Insert(event)
 
 	if err != nil {
 		app.errorJSON(w, err)

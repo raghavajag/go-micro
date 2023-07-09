@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	webPort  = "8080"
+	webPort  = "80"
 	rpcPort  = "5001"
 	mongoURL = "mongodb://mongo:27017"
 	gRpcPort = "50001"
@@ -43,10 +43,12 @@ func main() {
 			log.Println("Disconnected from MongoDB")
 		}
 	}()
-	log.Println("Connected to MongoDB")
 	app := Config{
 		Models: data.New(client),
 	}
+	log.Println("Starting service on port", webPort)
+
+	log.Println("Connected to MongoDB")
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%s", webPort),
 		Handler: app.routes(),
@@ -60,10 +62,10 @@ func main() {
 func connectToMongo() (*mongo.Client, error) {
 	// create connection options
 	clientOptions := options.Client().ApplyURI(mongoURL)
-	// clientOptions.SetAuth(options.Credential{
-	// 	Username: "admin",
-	// 	Password: "password",
-	// })
+	clientOptions.SetAuth(options.Credential{
+		Username: "admin",
+		Password: "password",
+	})
 
 	// connect
 	c, err := mongo.Connect(context.TODO(), clientOptions)
