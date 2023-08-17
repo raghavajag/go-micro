@@ -1,0 +1,6 @@
+auth-service/authApp
+broker-service/brokerApp
+front-end/frontApp.exe
+log-service/loggerApp
+listener-service/listenerApp
+project/db-data
