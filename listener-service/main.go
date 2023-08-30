@@ -17,6 +17,7 @@ func main() {
 		os.Exit(1)
 	}
 	defer rabbitConn.Close()
+	log.Println("Listening for and consuming RabbitMQ messages...")
 
 }
 
