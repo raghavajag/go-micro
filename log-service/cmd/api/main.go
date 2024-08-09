@@ -46,6 +46,7 @@ func main() {
 	app := Config{
 		Models: data.New(client),
 	}
+	go app.gRPCListen()
 	log.Println("Starting service on port", webPort)
 
 	log.Println("Connected to MongoDB")
